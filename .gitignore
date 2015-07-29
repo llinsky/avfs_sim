@@ -1,3 +1,4 @@
 #exclude these stupid fucking sample things
 *.html
 *.jpg
+README.*
