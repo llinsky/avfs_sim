@@ -1,0 +1,11 @@
+function [ c_next ] = updateCharge(stall,capac_value,T_const)
+%Just updates how much charge is on the capacitor
+
+if (stall == 1)
+    c_next = capac_value + capac_value*T_const*0.0001; %TODO: this isn't the real formula
+else
+    c_next = capac_value - capac_value*T_const*0.0001; %TODO: this isn't the real formula
+end
+
+end
+
