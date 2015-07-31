@@ -3,9 +3,13 @@
 % Function containing logic to output the next frequency and voltage
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function val = get_lut_value(temp,f_curr,counter)
+function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map,v_map)
+	P = CV^2*A*f
+	-how does freq depend on voltage?
+	-how does temp depend on voltage?
+	
+	%select correct T value 
 
-%What should go here? Research in progress ;)
-
+	%select correct V value 
 
 end
