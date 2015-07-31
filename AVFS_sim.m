@@ -112,7 +112,7 @@ while (t < sim_time)
         temp_curr = getTemp(last_temp,T_curr,T_map,v_curr,v_map);
         
         %we can't push a new frequency every clock cycle, need to look into
-        %this
+        %this. Actually it doesn't really matter. User picks policy.
         
         [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map,v_map);
         v_curr = v_next;
