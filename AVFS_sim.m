@@ -65,16 +65,18 @@ temp_last = 30;
 %this returns a 'cdf' of the number of clocks of work that have been assigned
 %at each unit of time
 work_vector = getWorkVector(sim_time, T_max, workload);
+last_work = 0;
+curr_work = 0;
 work_done = 0;
 
-sim_data = zeros(2,sim_time);
+time_queued = 0;
 
 t = 0;
 while (t < sim_time)
     %Just returns 1 if queue is empty
     stall = getStall(work_queue);
     
-    capac_value = updateCharge(stall,capac_value,T_const);
+    capac_value = updateCharge(stall,capac_value,T_const,v_curr);
     
     if (mod(t, T_curr) == 0)
         
