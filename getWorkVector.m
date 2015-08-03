@@ -23,9 +23,16 @@ v_work = zeros(1,sim_time);
 for i=1:sim_time
     rand = randm();
     if (rand <= event_prob)
+        event = 1;
+        event_type = 0;
         rand = randm();
-        
-        work_assigned = 0;
+        for j = 1:size(percs_cdf)
+            if (rand <= percs_cdf(j))
+                event_type = j;
+                break;
+            end
+        end
+        work_assigned = work_assigned + tasks(event_type);
     end
     
     v_work(sim_time) = work_assigned;
