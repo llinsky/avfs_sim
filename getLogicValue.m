@@ -1,13 +1,12 @@
 function [ bit ] = getLogicValue(capac_value)
-%UNTITLED10 Summary of this function goes here
-%   Detailed explanation goes here
+%returns logic value from voltage
 
 bit = 0;
-d_FF_threshold = 0.83; %TODO: I made this up
+d_FF_threshold = 1.3; %TODO: I made this up
 
-if (capac_value > 1.05*d_FF_threshold)
+if (capac_value > 1.1*d_FF_threshold)
     bit = 1;
-elseif (capac_value > 0.95*d_FF_threshold)
+elseif (capac_value > 0.9*d_FF_threshold)
     rand = randm(1,1);
     
     if (rand > 0.5)
