@@ -65,7 +65,9 @@ temp_last = 30;
 %this returns a 'cdf' of the number of clocks of work that have been assigned
 %at each unit of time
 work_vector = getWorkVector(sim_time, T_max, workload);
-work_queue = 0;
+work_done = 0;
+
+sim_data = zeros(2,sim_time);
 
 t = 0;
 while (t < sim_time)
@@ -112,7 +114,7 @@ while (t < sim_time)
         temp_curr = getTemp(last_temp,T_curr,T_map,v_curr,v_map);
         
         %we can't push a new frequency every clock cycle, need to look into
-        %this. Actually it doesn't really matter. User picks policy.
+        %this. Actually it doesn't really matter. User picks policy
         
         [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map,v_map);
         v_curr = v_next;
