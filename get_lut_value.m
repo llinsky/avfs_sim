@@ -44,7 +44,7 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 				continue;
 			end
 		
-			power = function2(T_map(j),v_map(i)) * activity_ratio  +  function3(v_map(i),temp_curr) * (1-activity_ratio); %Dynamic + staticthis is actually energy in a sense
+			power = function2(T_map(j),v_map(i)) * activity_ratio  +  function3(v_map(i),temp_curr) * (1-activity_ratio); %Dynamic + static, this is actually energy in a sense
 			if (power < bestPower)
 				bestPower = power;
 				T_next = T_map(j);
