@@ -1,0 +1,4 @@
+FREQUENCY AND VOLTAGE SCALING NOTES
+
+Need to find the optimal frequency based on current values
+How to do this? idk. I'm tired
