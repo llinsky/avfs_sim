@@ -39,12 +39,13 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 		for i=1:(size(v_map))
 		
 			v_min = function1(temp_curr, T_map(j)); %this is somewhat arbitrary, just use a somewhat realistic value for an existing CMOS platform.
-		
+													%Apparently averages between -4 mv/K and -2 mv/K. We could maybe just pick -3 mv/K with a base of 500 mV - roughly standard
+													%TENTATIVE: v_min = -0.03(t_curr - t_avg) + 0.5;
 			if (v_map(i) < v_min)
 				continue;
 			end
 		
-			power = function2(T_map(j),v_map(i)) * activity_ratio  +  function3(v_map(i),temp_curr) * (1-activity_ratio); %Dynamic + static, this is actually energy in a sense
+			power = function2(T_map(j),v_map(i)) * activity_ratio  +  function3(v_map(i),temp_curr) * (1-activity_ratio); %Dynamic + static, this is actually energy in a sense								
 			if (power < bestPower)
 				bestPower = power;
 				T_next = T_map(j);
