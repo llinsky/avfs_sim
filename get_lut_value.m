@@ -22,7 +22,7 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 	
 	T_max = estimated_current_workload/T_curr; %T_max = f_min to maintain a 100 percent workload (and not fall behind) 
 	
-	calculation_time_ratio = 1;
+	activity_ratio = 1;
 	
 	infinity = 9999999;
 	bestPower = infinity;
@@ -34,7 +34,7 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 			continue;
 		end
 		
-		calculation_time_ratio = T_map(j)/T_max; %perhaps should replace T_max with T_map(size(T_map)) for stable outputs?
+		activity_ratio = T_map(j)/T_max; %perhaps should replace T_max with T_map(size(T_map)) for stable outputs?
 	
 		for i=1:(size(v_map))
 		
@@ -44,7 +44,7 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 				continue;
 			end
 		
-			power = function2(T_map(j),v_map(i)) * calculation_time_ratio; %this is actually energy in a sense
+			power = function2(T_map(j),v_map(i)) * activity_ratio  +  function3(v_map(i),temp_curr) * (1-activity_ratio); %Dynamic + staticthis is actually energy in a sense
 			if (power < bestPower)
 				bestPower = power;
 				T_next = T_map(j);
