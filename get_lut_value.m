@@ -18,7 +18,7 @@ function  [T_next, v_next] = get_lut_value(temp_curr,T_curr,v_curr,counter,T_map
 	%leo tentative template
 
 	countersize = 15; %(max value)
-	estimated_current_workload = (counter/countersize);
+	estimated_current_workload = 1-(counter/countersize);
 	
 	T_max = estimated_current_workload/T_curr; %T_max = f_min to maintain a 100 percent workload (and not fall behind) 
 	
