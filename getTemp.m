@@ -30,11 +30,11 @@ else
 end
 
 
-rand = randm();
+randnum = rand;
 
-rand = rand - 0.5 + bias;
+randnum = randnum - 0.5 + bias;
 
-next_temp = last_temp + rand*0.01;
+next_temp = last_temp + randnum*0.01;
 
 if (next_temp >= 110)
     next_temp = 110;

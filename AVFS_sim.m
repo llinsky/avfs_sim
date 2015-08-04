@@ -17,7 +17,7 @@ T_nom = 18;
 T_max = 30;
 size = 8;
 
-T_curr = T_nom; % better for simulation to work with periods instead of freqs
+T_curr = T_nom;
 T_map = getPeriodMap(T_nom,T_min,T_max,size);
 %T_map = [18;19;20;22;24;26;28;30]; 
 % this is just an example T_map, different period (freq) ranges may be 
@@ -50,7 +50,7 @@ C = T_const/R;
 
 counter = 0;
 counter_bits = 4;
-counter_size = exp(2,counter_size);
+counter_size = 2^(counter_bits);
 
 workload = 0.6; % workload*max_freq*sim_time = total number of work clocks
 
@@ -70,18 +70,19 @@ work_queue_log = zeros((sim_time/100),1);
 power_log = zeros((sim_time/100),1);
 
 t = 0;
+capac_value = 0;
+d1=0;
 while (t < sim_time)
     %Just returns 1 if queue is empty
-    curr_work = work_vector(sim_time+1);
+    curr_work = work_vector(sim_time);
     stall = getStall(work_vector(sim_time) - work_done);
     
     capac_value = updateCharge(stall,capac_value,T_const,v_curr);
     
     if (mod(t, T_curr) == 0)
         
-        if (work_queue_log > 0)
-            work_queue_log = work_queue_log - 1;
-            
+        if (work_vector(sim_time)-work_done > 0)
+            work_done = work_done+1;
             %need a clear definition for stalling, need to figure out
             %sleep mode
             power_curr = 4*10^(-9)*(1/T_curr)*v_curr;

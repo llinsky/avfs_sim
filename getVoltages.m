@@ -3,9 +3,9 @@ function [ v_map ] = getVoltages(T_map,v_nom,v_min,v_max,size)
 %steps
 
 if (size < 1)
-    printf('error');
+    disp('error');
 elseif (v_min > v_max) 
-    printf('error2');
+    disp('error2');
 end
 
 if (size == 1)
@@ -16,11 +16,11 @@ end
 
 v_map = zeros(size,1);
 
-v_map[1] = v_min;
-v_map[size] = v_max;
+v_map(1) = v_min;
+v_map(size) = v_max;
 
-for (int index=1;index<=size;index=index+1)
-    v_map[index] = v_min + (index-1)*step;
+for index=1:size
+    v_map(index) = v_min + (index-1)*step;
 end
 
 

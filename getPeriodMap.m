@@ -5,9 +5,9 @@ function [ T_map ] = getPeriodMap(T_nom,T_min,T_max,size)
 %  
 
 if (size < 1)
-    printf('error');
+    disp('error');
 elseif (T_min < T_max) %should min be defined in terms of period or frequency? I need to clarify
-    printf('error2');
+    disp('error2');
 end
 
 if (size == 1)
@@ -18,10 +18,10 @@ end
 
 T_map = zeros(size,1);
 
-T_map[1] = T_min;
-T_map[size] = T_max;
+T_map(1) = T_min;
+T_map(size) = T_max;
 
-for (int index=1;index<=size;index=index+1)
-    T_map[index] = T_min + (index-1)*step;
+for index=1:size
+    T_map(index) = T_min + (index-1)*step;
 end
 

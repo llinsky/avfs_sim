@@ -21,13 +21,13 @@ work_assigned = 0;
 v_work = zeros(1,sim_time);
 
 for i=1:sim_time
-    rand = randm();
-    if (rand <= event_prob)
+    randnum = rand;
+    if (randnum <= event_prob)
         event = 1;
-        event_type = 0;
-        rand = randm();
+        event_type = 1;
+        randnum = rand;
         for j = 1:size(percs_cdf)
-            if (rand <= percs_cdf(j))
+            if (randnum <= percs_cdf(j))
                 event_type = j;
                 break;
             end
