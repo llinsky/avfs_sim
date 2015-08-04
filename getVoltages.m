@@ -9,9 +9,9 @@ elseif (v_min > v_max)
 end
 
 if (size == 1)
-    step = (v_max - v_min)/(size-1);
-else
     step = 0;
+else
+    step = (v_max - v_min)/(size-1);
 end
 
 v_map = zeros(size,1);

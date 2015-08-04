@@ -34,7 +34,7 @@ randnum = rand;
 
 randnum = randnum - 0.5 + bias;
 
-next_temp = last_temp + randnum*0.01;
+next_temp = last_temp + randnum*0.5;
 
 if (next_temp >= 110)
     next_temp = 110;

@@ -1,4 +1,4 @@
-function [ v_work ] = getWorkVector(sim_time, T_max, workload)
+function [ v_work ] = getWorkVector(sim_time, T_min, workload)
 %Returns the workload. Note that this may not be the most realistic way to
 %simulate a processor workload, even for the special scenarios we are
 %describing (interrupt based, sporadic workloads, low latency). The
@@ -15,7 +15,7 @@ percs_cdf = [0.2 0.3 0.7 1];
 avg_req_size = tasks*(percs');
 
 %event_prob * avg_req_size / T_max = workload;
-event_prob = workload/T_max/avg_req_size;
+event_prob = workload/T_min/avg_req_size*10;
 
 work_assigned = 0;
 v_work = zeros(1,sim_time);
@@ -23,7 +23,6 @@ v_work = zeros(1,sim_time);
 for i=1:sim_time
     randnum = rand;
     if (randnum <= event_prob)
-        event = 1;
         event_type = 1;
         randnum = rand;
         for j = 1:size(percs_cdf)
@@ -35,8 +34,10 @@ for i=1:sim_time
         work_assigned = work_assigned + tasks(event_type);
     end
     
-    v_work(sim_time) = work_assigned;
+    v_work(i) = work_assigned;
 end
+
+v_work = v_work/10;
 
 end
 

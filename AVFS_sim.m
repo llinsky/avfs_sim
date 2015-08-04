@@ -33,7 +33,7 @@ temp_max = 110; %degrees celsius
 
 %need to find formula to find min, max voltages realistic over temperature
 %range given nominal
-v_nom = 1.8;
+v_nom = 2.3;
 v_min = 1.4;
 v_max = 2.4;
 
@@ -56,39 +56,38 @@ workload = 0.6; % workload*max_freq*sim_time = total number of work clocks
 
 energy = 0;
 
-T_sample = T_const/2;
+T_sample = round(T_const/2);
 
 temp_curr = 30;
 temp_last = 30;
 
 %this returns a 'cdf' of the number of clocks of work that have been assigned
 %at each unit of time
-work_vector = getWorkVector(sim_time, T_max, workload);
+work_vector = getWorkVector(sim_time, T_min, workload);
 work_done = 0;
-work_queue_log = zeros((sim_time/100),1);
+work_queue_log = zeros((sim_time/1000),1);
 
-power_log = zeros((sim_time/100),1);
+power_log = zeros((sim_time/1000),1);
 
 t = 0;
 capac_value = 0;
 d1=0;
 while (t < sim_time)
-    %Just returns 1 if queue is empty
     curr_work = work_vector(sim_time);
-    stall = getStall(work_vector(sim_time) - work_done);
+    stall = getStall(curr_work - work_done);
     
     capac_value = updateCharge(stall,capac_value,T_const,v_curr);
     
     if (mod(t, T_curr) == 0)
         
-        if (work_vector(sim_time)-work_done > 0)
+        if (work_vector(t+1)-work_done > 0)
             work_done = work_done+1;
             %need a clear definition for stalling, need to figure out
             %sleep mode
-            power_curr = 4*10^(-9)*(1/T_curr)*v_curr;
+            power_curr = 4*(1/T_curr)*v_curr^2;
             energy = energy + power_curr;
         else
-            power_curr = v_curr^1.85;
+            power_curr = 4*v_curr^1.85;
             energy = energy + power_curr; %How do we calculate power accurately?
         end
     end
@@ -125,16 +124,27 @@ while (t < sim_time)
         
     end
     
-    if (mod(sim_time,100) == 0)
-        work_queue_log(mod(sim_time,100)+1) = work_vector(sim_time) - work_done;
-        power_log(mod(sim_time,100)+1) = power_curr;
+    if (mod(t,1000) == 0)
+        work_queue_log((t/1000)+1) = work_vector(t+1) - work_done;
+        power_log((t/1000)+1) = power_curr;
     end
     t = t + 1;
 end
 
+avg_power = 4*(10/T_min)*v_nom^2*workload + 4*v_nom^1.85*(1-workload)
+avg_power_log = zeros((sim_time/1000),1);
+for i=1:(sim_time/1000)
+    avg_power_log(i) = avg_power;
+end
+
 figure;
-grid;
 plot(power_log);
+hold on;
+plot (avg_power_log,'red');
+legend('Adaptive Feedback Power','Unoptimized Avg Power');
+xlabel('Time');
+ylabel('Power');
+hold off;
 figure;
 grid;
 plot(work_queue_log);
